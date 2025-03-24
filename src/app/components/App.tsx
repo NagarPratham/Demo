@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './global.css';
 import Login from './Login';
 import Main from './Main';
 import InwardUpload from './InwardUpload';

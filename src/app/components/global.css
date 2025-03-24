@@ -1,0 +1,20 @@
+:root {
+    --text-color: #333; /* Default light mode */
+    --bg-color: #fff;
+    --heading-color: #222;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --text-color: #fff; /* Dark mode override */
+      --bg-color: #121212;
+      --heading-color: #ddd;
+    }
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background-color 0.3s, color 0.3s;
+  }

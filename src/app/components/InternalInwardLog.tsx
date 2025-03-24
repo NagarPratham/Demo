@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faDownload, faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 interface InwardItem {
     customId: string;
@@ -84,50 +86,67 @@ const InternalInwardLog: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-white p-4">
-            <div className="max-w-4xl bg-gray-800 rounded-lg shadow-lg p-8">
-                <h2 className="text-3xl font-semibold text-center text-white mb-8">Internal Inward Log</h2>
+        <div className="min-h-screen bg-gray-100 p-8">
+            <div className="max-w-full mx-auto bg-white rounded-lg shadow-lg p-8">
+                <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">Internal Inward Log</h2>
                 <input 
                     type="text" 
                     placeholder="Search by ID" 
                     value={searchId} 
                     onChange={handleSearch} 
-                    className="mb-4 px-4 py-2 w-full border rounded"
+                    className="mb-6 px-4 py-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-                {loading && <div className="text-white text-center">Loading data...</div>}
+                {loading && <div className="text-gray-800 text-center">Loading data...</div>}
                 {error && <div className="text-red-500 text-center">{error}</div>}
                 
                 {!loading && !error && filteredData.length > 0 && (
                     <div className="overflow-x-auto">
-                        <table className="table-auto w-full text-white">
+                        <table className="table-auto w-full text-gray-800">
                             <thead>
-                                <tr>
-                                    <th className="px-4 py-2 border">Custom ID</th>
-                                    <th className="px-4 py-2 border">Inward Type</th>
-                                    <th className="px-4 py-2 border">Letter Date</th>
-                                    <th className="px-4 py-2 border">Received Date</th>
-                                    <th className="px-4 py-2 border">Subject</th>
-                                    <th className="px-4 py-2 border">From</th>
-                                    <th className="px-4 py-2 border">To</th>
-                                    <th className="px-4 py-2 border">Pages</th>
-                                    <th className="px-4 py-2 border">Actions</th>
+                                <tr className="bg-gray-200">
+                                    <th className="px-4 py-3 border w-1/12">Custom ID</th>
+                                    <th className="px-4 py-3 border w-1/6">Inward Type</th>
+                                    <th className="px-4 py-3 border w-1/6">Letter Date</th>
+                                    <th className="px-4 py-3 border w-1/6">Received Date</th>
+                                    <th className="px-4 py-3 border w-1/4">Subject</th>
+                                    <th className="px-4 py-3 border w-1/6">From</th>
+                                    <th className="px-4 py-3 border w-1/6">To</th>
+                                    <th className="px-4 py-3 border w-1/12">Pages</th>
+                                    <th className="px-4 py-3 border w-1/12">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {filteredData.map((item) => (
-                                    <tr key={item.customId}>
-                                        <td className="px-4 py-2 border">{item.customId}</td>
-                                        <td className="px-4 py-2 border">{item.inwardType}</td>
-                                        <td className="px-4 py-2 border">{item.letterDate}</td>
-                                        <td className="px-4 py-2 border">{item.receivedDate}</td>
-                                        <td className="px-4 py-2 border">{item.subject}</td>
-                                        <td className="px-4 py-2 border">{item.from}</td>
-                                        <td className="px-4 py-2 border">{item.to}</td>
-                                        <td className="px-4 py-2 border">{item.pages}</td>
-                                        <td className="px-4 py-2 border">
-                                            <button onClick={() => handleEdit(item)} className="bg-blue-500 text-white px-4 py-1 rounded">Edit</button>
-                                            <button onClick={() => handleDownload(item.file)} className="bg-yellow-500 text-white px-4 py-1 rounded ml-2">Download PDF</button>
-                                            <button onClick={() => handleDelete(item.customId)} className="bg-red-500 text-white px-4 py-1 rounded ml-2">Delete</button>
+                                    <tr key={item.customId} className="hover:bg-gray-50">
+                                        <td className="px-4 py-3 border text-center">{item.customId}</td>
+                                        <td className="px-4 py-3 border text-center">{item.inwardType}</td>
+                                        <td className="px-4 py-3 border text-center">{item.letterDate}</td>
+                                        <td className="px-4 py-3 border text-center">{item.receivedDate}</td>
+                                        <td className="px-4 py-3 border text-center">{item.subject}</td>
+                                        <td className="px-4 py-3 border text-center">{item.from}</td>
+                                        <td className="px-4 py-3 border text-center">{item.to}</td>
+                                        <td className="px-4 py-3 border text-center">{item.pages}</td>
+                                        <td className="px-4 py-3 border text-center">
+                                            <div className="flex justify-center space-x-2">
+                                                <button 
+                                                    onClick={() => handleEdit(item)} 
+                                                    className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition duration-200"
+                                                >
+                                                    <FontAwesomeIcon icon={faEdit} className="text-lg" />
+                                                </button>
+                                                <button 
+                                                    onClick={() => handleDownload(item.file)} 
+                                                    className="bg-yellow-500 text-white p-2 rounded-lg hover:bg-yellow-600 transition duration-200"
+                                                >
+                                                    <FontAwesomeIcon icon={faDownload} className="text-lg" />
+                                                </button>
+                                                <button 
+                                                    onClick={() => handleDelete(item.customId)} 
+                                                    className="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 transition duration-200"
+                                                >
+                                                    <FontAwesomeIcon icon={faTimes} className="text-lg" />
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}
@@ -136,21 +155,35 @@ const InternalInwardLog: React.FC = () => {
                     </div>
                 )}
 
-                {!loading && !error && filteredData.length === 0 && <div className="text-white text-center">No inward data available</div>}
+                {!loading && !error && filteredData.length === 0 && <div className="text-gray-800 text-center">No inward data available</div>}
 
                 {/* Edit Form */}
                 {editData && (
-                    <div className="mt-6 p-4 bg-gray-700 rounded-lg">
-                        <h3 className="text-xl text-white mb-4">Edit Entry</h3>
-                        <input type="text" name="inwardType" value={editData.inwardType} onChange={handleChange} className="mb-2 px-4 py-2 w-full border rounded" />
-                        <input type="date" name="letterDate" value={editData.letterDate} onChange={handleChange} className="mb-2 px-4 py-2 w-full border rounded" />
-                        <input type="date" name="receivedDate" value={editData.receivedDate} onChange={handleChange} className="mb-2 px-4 py-2 w-full border rounded" />
-                        <textarea name="subject" value={editData.subject} onChange={handleChange} className="mb-2 px-4 py-2 w-full border rounded"></textarea>
-                        <input type="text" name="from" value={editData.from} onChange={handleChange} className="mb-2 px-4 py-2 w-full border rounded" />
-                        <input type="text" name="to" value={editData.to} onChange={handleChange} className="mb-2 px-4 py-2 w-full border rounded" />
-                        <input type="number" name="pages" value={editData.pages} onChange={handleChange} className="mb-2 px-4 py-2 w-full border rounded" />
-                        <button onClick={handleUpdate} className="bg-green-500 text-white px-4 py-2 rounded">Update</button>
-                        <button onClick={() => setEditData(null)} className="bg-gray-500 text-white px-4 py-2 rounded ml-2">Cancel</button>
+                    <div className="mt-8 p-6 bg-gray-50 rounded-lg shadow-inner">
+                        <h3 className="text-xl text-gray-800 mb-6">Edit Entry</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input type="text" name="inwardType" value={editData.inwardType} onChange={handleChange} className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Inward Type" />
+                            <input type="date" name="letterDate" value={editData.letterDate} onChange={handleChange} className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                            <input type="date" name="receivedDate" value={editData.receivedDate} onChange={handleChange} className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                            <textarea name="subject" value={editData.subject} onChange={handleChange} className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Subject" />
+                            <input type="text" name="from" value={editData.from} onChange={handleChange} className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="From" />
+                            <input type="text" name="to" value={editData.to} onChange={handleChange} className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="To" />
+                            <input type="number" name="pages" value={editData.pages} onChange={handleChange} className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Pages" />
+                        </div>
+                        <div className="flex justify-end mt-6 space-x-4">
+                            <button 
+                                onClick={handleUpdate} 
+                                className="bg-green-500 text-white p-2 rounded-lg hover:bg-green-600 transition duration-200"
+                            >
+                                <FontAwesomeIcon icon={faSave} className="text-lg" />
+                            </button>
+                            <button 
+                                onClick={() => setEditData(null)} 
+                                className="bg-gray-500 text-white p-2 rounded-lg hover:bg-gray-600 transition duration-200"
+                            >
+                                <FontAwesomeIcon icon={faTimes} className="text-lg" />
+                            </button>
+                        </div>
                     </div>
                 )}
             </div>
